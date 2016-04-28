@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="297f337a-c047-4ddc-9064-cec369e08e95" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/GUI/Page3GUI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Bussbolag.iws" />
@@ -37,10 +36,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Page2GUI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Page2GUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GUI/Page2GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.6792453">
               <caret line="234" column="6" selection-start-line="234" selection-start-column="6" selection-end-line="236" selection-end-column="61" />
               <folding>
                 <element signature="e#1189#1190#0" expanded="true" />
@@ -52,10 +51,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Page3GUI.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Page3GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/Page3GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5990566">
+            <state vertical-scroll-proportion="0.0">
               <caret line="116" column="15" selection-start-line="116" selection-start-column="15" selection-end-line="116" selection-end-column="15" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -177,7 +176,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
-  <component name="RunManager" selected="Application.Page3GUI">
+  <component name="RunManager" selected="Application.Page2GUI">
     <configuration default="false" name="MainGUI" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -501,8 +500,8 @@
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Application.Page3GUI" />
-        <item index="1" class="java.lang.String" itemvalue="Application.Page2GUI" />
+        <item index="0" class="java.lang.String" itemvalue="Application.Page2GUI" />
+        <item index="1" class="java.lang.String" itemvalue="Application.Page3GUI" />
         <item index="2" class="java.lang.String" itemvalue="Application.MainGUI" />
       </list>
     </recent_temporary>
@@ -530,11 +529,17 @@
       <option name="project" value="LOCAL" />
       <updated>1461834411348</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Page3GUI">
+      <created>1461837476675</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1461837476675</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1696" height="1026" extended-state="6" />
+    <frame x="-8" y="-8" width="1696" height="1026" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -575,7 +580,8 @@
     <MESSAGE value="&#10;" />
     <MESSAGE value="&#10;commit" />
     <MESSAGE value="Page2GUI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Page2GUI" />
+    <MESSAGE value="Page3GUI" />
+    <option name="LAST_COMMIT_MESSAGE" value="Page3GUI" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -656,27 +662,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Page2GUI.java">
+    <entry file="file://$PROJECT_DIR$/src/GUI/Page3GUI.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
+          <caret line="116" column="15" selection-start-line="116" selection-start-column="15" selection-end-line="116" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1317#1318#0" expanded="true" />
+            <element signature="e#1349#1350#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Page2GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6792453">
           <caret line="234" column="6" selection-start-line="234" selection-start-column="6" selection-end-line="236" selection-end-column="61" />
           <folding>
             <element signature="e#1189#1190#0" expanded="true" />
             <element signature="e#1221#1222#0" expanded="true" />
             <marker date="1461834379773" expanded="true" signature="2032:7168" placeholder="// JFormDesigner - Component initialization - DO NOT MODIFY" />
             <marker date="1461834379773" expanded="true" signature="7182:7337" placeholder="// JFormDesigner - Variables declaration - DO NOT MODIFY" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Page3GUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5990566">
-          <caret line="116" column="15" selection-start-line="116" selection-start-column="15" selection-end-line="116" selection-end-column="15" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1317#1318#0" expanded="true" />
-            <element signature="e#1349#1350#0" expanded="true" />
           </folding>
         </state>
       </provider>
