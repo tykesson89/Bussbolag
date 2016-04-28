@@ -7,9 +7,10 @@ import java.awt.event.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Properties;
 import javax.swing.*;
 import javax.swing.event.*;
+
+import Controller.MainGuiController;
 import com.jgoodies.forms.factories.*;
 import com.jgoodies.forms.layout.*;
 import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
@@ -20,7 +21,7 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
  * @author Henrik Tykesson
  */
 public class MainGUI extends JFrame {
-
+    private MainGuiController controller;
     private int ticket = 0;
     private JCheckBox checkBoxTur;
     private JCheckBox checkBoxRetur;
@@ -74,10 +75,10 @@ public class MainGUI extends JFrame {
         // TODO add your code here
     }
     private void checkBoxTurActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        controller.turIsChecked();
     }
     private void checkBoxReturActionPerformed(ActionEvent e) {
-        // TODO add your code here
+        controller.returIsChecked();
     }
 
     private void initComponents() {
