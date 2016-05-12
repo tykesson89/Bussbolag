@@ -113,7 +113,7 @@ public class ServerUI extends JPanel{
 					server.addCity(townName.getText(), townCountry.getText(), townCurrency.getText(), townLanguage.getText());
 				}
 			} else if (e.getSource() == btnConnect && btnConnect.getText().equals("Connect")){
-				server = new Server("localhost", "buss",  txtPassword.getText(), txtUserName.getText());
+				server = new Server("localhost", "buss",  txtPassword.getText(), txtUserName.getText(), 40001);
 				btnConnect.setText("Disconnect");
 			} else if (e.getSource() == btnConnect && btnConnect.getText().equals("Disconnect")){
 				server.closeConnection();

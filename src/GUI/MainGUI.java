@@ -82,8 +82,7 @@ public class MainGUI extends JFrame {
     }
 
     private void initComponents() {
-        // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
-        // Generated using JFormDesigner Evaluation license - Henrik Tykesson
+
         checkBoxTur = new JCheckBox();
         checkBoxRetur = new JCheckBox();
         comboBoxAvresa = new JComboBox();
