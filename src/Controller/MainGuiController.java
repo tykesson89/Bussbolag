@@ -16,7 +16,7 @@ public class MainGuiController {
     private MainGUI mainGUI;
 
     public MainGuiController(){
-        mainGUI = new MainGUI();
+        mainGUI = new MainGUI(this);
         new GetAllCities();
     }
     public Object[] getAllCities(){
@@ -63,5 +63,8 @@ public class MainGuiController {
                 e.printStackTrace();
             }
         }
+    }
+    public static void main(String[] args){
+        MainGuiController mainGuiController = new MainGuiController();
     }
 }

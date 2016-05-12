@@ -34,18 +34,29 @@ public class MainGUI extends JFrame {
     private JButton buttonSök;
     private JFrame frame;
 
-    public MainGUI() {
+    public MainGUI(MainGuiController controller) {
         initComponents();
+        this.controller = controller;
+
 
 
     }
 
+
     private void comboBoxAvresaPopupMenuWillBecomeVisible(PopupMenuEvent e) {
-        // TODO add your code here
+        comboBoxAvresa.removeAllItems();
+        Object[] res = controller.getAllCities();
+        for(int i = 0; i < res.length; i++){
+            comboBoxAvresa.addItem(res[i]);
+        }
     }
 
     private void comboBoxHemresaPopupMenuWillBecomeVisible(PopupMenuEvent e) {
-        // TODO add your code here
+        comboBoxHemresa.removeAllItems();
+        Object[] res = controller.getAllCities();
+        for(int i = 0; i < res.length; i++){
+            comboBoxHemresa.addItem(res[i]);
+        }
     }
 
     private void buttonPlusActionPerformed(ActionEvent e) {
@@ -70,7 +81,8 @@ public class MainGUI extends JFrame {
     }
 
     private void comboBoxHemresaActionPerformed(ActionEvent e) {
-        // TODO add your code here
+
+
     }
 
     private void comboBoxAvresaActionPerformed(ActionEvent e) {
@@ -116,9 +128,13 @@ public class MainGUI extends JFrame {
         comboBoxAvresa.setEditable(true);
         comboBoxAvresa.addPopupMenuListener(new PopupMenuListener() {
             @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {}
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
             @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+
+            }
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 comboBoxAvresaPopupMenuWillBecomeVisible(e);
@@ -133,9 +149,13 @@ public class MainGUI extends JFrame {
 
         comboBoxHemresa.addPopupMenuListener(new PopupMenuListener() {
             @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {}
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
             @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {}
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+
+            }
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 comboBoxHemresaPopupMenuWillBecomeVisible(e);
@@ -222,10 +242,6 @@ public class MainGUI extends JFrame {
 
 
 
-    public static void main(String[] args){
-        MainGUI mainGUI = new MainGUI();
 
-
-    }
 }
 
