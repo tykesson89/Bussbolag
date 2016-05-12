@@ -5,6 +5,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -55,6 +56,13 @@ public class Server extends Thread {
                 System.out.println("Client Connected");
                 ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
                 ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+                String str;
+                str =  ois.readObject().toString();
+                if(str.equals("All Cities")){
+                Object[] res = getAllCities();
+                    oos.writeObject(res);
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,6 +83,21 @@ public class Server extends Thread {
             System.out.println(e);
         }
 
+    }
+    public Object[] getAllCities(){
+        ResultSet rs;
+        ArrayList<String> res = new ArrayList<>();
+        Statement statement;
+        try {
+            statement = conn.createStatement();
+            rs = statement.executeQuery("Select namn from Stad");
+            while (rs.next()){
+                res.add(rs.getString("namn"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return res.toArray();
     }
 
     public void addTravel(Date date, int week, int seats, int price, Time departure, Time arrival, String from, String to) {

@@ -33,9 +33,11 @@ public class MainGUI extends JFrame {
     private JButton buttonAvsluta;
     private JButton buttonSök;
     private JFrame frame;
-    // JFormDesigner - End of variables declaration  //GEN-END:variables
+
     public MainGUI() {
         initComponents();
+
+
     }
 
     private void comboBoxAvresaPopupMenuWillBecomeVisible(PopupMenuEvent e) {
@@ -128,6 +130,7 @@ public class MainGUI extends JFrame {
 
         //---- comboBoxHemresa ----
         comboBoxHemresa.setEditable(true);
+
         comboBoxHemresa.addPopupMenuListener(new PopupMenuListener() {
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {}
@@ -192,7 +195,7 @@ public class MainGUI extends JFrame {
         frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
     }
 
     public class DateLabelFormatter extends JFormattedTextField.AbstractFormatter {
@@ -221,6 +224,7 @@ public class MainGUI extends JFrame {
 
     public static void main(String[] args){
         MainGUI mainGUI = new MainGUI();
+
 
     }
 }
