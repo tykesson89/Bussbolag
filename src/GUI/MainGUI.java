@@ -33,6 +33,8 @@ public class MainGUI extends JFrame {
     private JButton buttonAvsluta;
     private JButton buttonSök;
     private JFrame frame;
+    private JDatePickerImpl datePickerHemresa;
+    private JDatePickerImpl datePickerAvresa;
 
     public MainGUI(MainGuiController controller) {
         initComponents();
@@ -77,7 +79,7 @@ public class MainGUI extends JFrame {
     }
 
     private void buttonSökActionPerformed(ActionEvent e) {
-        // TODO add your code here
+
     }
 
     private void comboBoxHemresaActionPerformed(ActionEvent e) {
@@ -126,6 +128,13 @@ public class MainGUI extends JFrame {
 
         //---- comboBoxAvresa ----
         comboBoxAvresa.setEditable(true);
+        comboBoxAvresa.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                comboBoxAvresa.getSelectedItem();
+                controller.setAvresa(String.valueOf(comboBoxAvresa.getSelectedItem()));
+            }
+        });
         comboBoxAvresa.addPopupMenuListener(new PopupMenuListener() {
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
@@ -146,7 +155,13 @@ public class MainGUI extends JFrame {
 
         //---- comboBoxHemresa ----
         comboBoxHemresa.setEditable(true);
-
+        comboBoxHemresa.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                comboBoxHemresa.getSelectedItem();
+                controller.setHemresa(String.valueOf(comboBoxHemresa.getSelectedItem()));
+            }
+        });
         comboBoxHemresa.addPopupMenuListener(new PopupMenuListener() {
             @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
@@ -167,13 +182,13 @@ public class MainGUI extends JFrame {
         //---- DatePickerAvresa ----
         UtilDateModel modelAvresa = new UtilDateModel();
         JDatePanelImpl datePanelAvresa = new JDatePanelImpl(modelAvresa);
-        JDatePickerImpl datePickerAvresa = new JDatePickerImpl(datePanelAvresa, new DateLabelFormatter());
+        datePickerAvresa = new JDatePickerImpl(datePanelAvresa, new DateLabelFormatter());
         contentPane.add(datePickerAvresa, CC.xy(1, 5, CC.LEFT, CC.DEFAULT));
 
         //---- DatePickerHemresa ----
         UtilDateModel modelHemresa = new UtilDateModel();
         JDatePanelImpl datePanelHemresa = new JDatePanelImpl(modelHemresa);
-        JDatePickerImpl datePickerHemresa = new JDatePickerImpl(datePanelHemresa, new DateLabelFormatter());
+        datePickerHemresa = new JDatePickerImpl(datePanelHemresa, new DateLabelFormatter());
 
         contentPane.add(datePickerHemresa, CC.xywh(9, 5, 19, 1));
 

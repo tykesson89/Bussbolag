@@ -5,6 +5,9 @@ import GUI.MainGUI;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Henrik on 2016-04-28.
@@ -14,6 +17,12 @@ public class MainGuiController {
     private boolean returIsChecked;
     private Object[] res;
     private MainGUI mainGUI;
+    private String avresa;
+    private String hemresa;
+    private Date dateAvresa;
+    private Date dateHemresa;
+    private Boolean tur;
+    private int tickets;
 
     public MainGuiController(){
         mainGUI = new MainGUI(this);
@@ -22,7 +31,33 @@ public class MainGuiController {
     public Object[] getAllCities(){
         return res;
     }
+    public void setDateAvresa(String dateAvresa){
+        Date date;
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = formatter.parse(dateAvresa);
+            this.dateAvresa = date;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void setDateHemresa(String dateHemresa){
+        Date date;
+        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            date = formatter.parse(dateHemresa);
+            this.dateHemresa = date;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    public void setTickets(int tickets){
+        this.tickets = tickets;
 
+    }
+    public void setTur(boolean tur){
+        this.tur = tur;
+    }
 
     public void turIsChecked(){
         this.turIsChecked = true;
@@ -35,7 +70,12 @@ public class MainGuiController {
     }
 
 
-
+    public void setAvresa(String avresa){
+        this.avresa = avresa;
+    }
+    public void setHemresa(String hemresa){
+        this.hemresa = hemresa;
+    }
 
 
 
