@@ -59,7 +59,7 @@ public class Server extends Thread {
                 String str;
                 str =  ois.readObject().toString();
                 if(str.equals("All Cities")){
-                Object[] res = getAllCities();
+                	Object[] res = getAllCities();
                     oos.writeObject(res);
                 }
 
@@ -84,6 +84,7 @@ public class Server extends Thread {
         }
 
     }
+    
     public Object[] getAllCities(){
         ResultSet rs;
         ArrayList<String> res = new ArrayList<>();
@@ -99,23 +100,48 @@ public class Server extends Thread {
         }
         return res.toArray();
     }
-
-    public void addTravel(Date date, int week, int seats, int price, Time departure, Time arrival, String from, String to) {
-        try {
-            PreparedStatement stmt = conn.prepareStatement("insert into Resa(datum, vecka, platser, pris, avgångstid, ankomsttid, till, från) values (?, ?, ?, ?, ?, ?, ?, ?)");
-            stmt.setDate(1, date);
-            stmt.setInt(2, week);
-            stmt.setInt(3, seats);
-            stmt.setInt(4, price);
-            stmt.setTime(5, departure);
-            stmt.setTime(6, arrival);
-            stmt.setString(7, from);
-            stmt.setString(8, to);
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+    
+    
+    public void addTravel(int week, String fromCity, String toCity, Time departure, Time arrival, int price, int seats ){
+    	String weekDay;
+    	
+    	for(int i = week ; i < week+26; i++){
+    		
+    		for(int j = 1 ; j < 8 ; j++){
+    			try {
+    				if(j == 1){
+    					weekDay = "Måndag";
+    				} else if(j == 2){
+    					weekDay = "Tisdag";
+    				} else if (j == 3){
+    					weekDay = "Onsdag";
+    				} else if (j == 4){
+    					weekDay = "Torsdag";
+    				} else if (j == 5){
+    					weekDay = "Fredag";
+    				} else if (j == 6){
+    					weekDay = "Lördag";
+    				} else {
+    					weekDay = "Söndag";
+    				}
+    	            PreparedStatement stmt = conn.prepareStatement("insert into Resa(vecka, platser, pris, veckodag, avgångstid, ankomsttid, till, från) values (?, ?, ?, ?, ?, ?, ?, ?)");
+    	            stmt.setInt(1, i);
+    	            stmt.setInt(2, seats);
+    	            stmt.setInt(3, price);
+    	            stmt.setString(4, weekDay);
+    	            stmt.setTime(5, departure);
+    	            stmt.setTime(6, arrival);
+    	            stmt.setString(7, fromCity);
+    	            stmt.setString(8, toCity);
+    	            stmt.executeUpdate();
+    	            
+    	        } catch (SQLException e) {
+    	            System.out.println(e);
+    	        }
+    		}
+    		
+    	}
+    	System.out.println("Adding travels");
     }
 
 
@@ -123,7 +149,10 @@ public class Server extends Thread {
      * Test main för Server
      */
     public static void main(String[] args) {
-
+    	long ret = ((((-1) * 3600000)) + ( 30* 60000) + ( 25* 1000));
+    	
+    	Time time = new Time(ret);
+    	System.out.println(time.toString());
     }
 
 }

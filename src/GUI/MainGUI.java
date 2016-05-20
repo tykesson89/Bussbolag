@@ -35,13 +35,12 @@ public class MainGUI extends JFrame {
     private JFrame frame;
     private JDatePickerImpl datePickerHemresa;
     private JDatePickerImpl datePickerAvresa;
+    
 
     public MainGUI(MainGuiController controller) {
         initComponents();
         this.controller = controller;
-
-
-
+        
     }
 
 

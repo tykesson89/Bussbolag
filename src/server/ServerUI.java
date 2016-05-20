@@ -3,10 +3,14 @@ package server;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.event.PopupMenuEvent;
+import javax.swing.event.PopupMenuListener;
 
 public class ServerUI extends JPanel{
 	private Server server;
@@ -29,11 +33,36 @@ public class ServerUI extends JPanel{
 	private JLabel txtTownLanguage;
 	
 	//Resa
+	private JButton btnTravel;
+	
+	private JComboBox comboBoxFrom;
+	private JLabel txtTravelFrom;
+    private JComboBox comboBoxTo;
+    private JLabel txtTravelTo;
+	
+	private JTextField travelWeek;
+	private JLabel txtTravelWeek;
+	
+	private JTextField travelPrice;
+	private JLabel txtTravelPrice;
+	
+	private JTextField travelSeats;
+	private JLabel txtTravelSeats;
+	
+	private JTextField travelDeparture;
+	private JLabel txtTravelDeparture;
+	
+	private JTextField travelArrival;
+	private JLabel txtTravelArrival;
+	
+	
+	
 	
 	
 	public ServerUI(){
 		initConnect();
 		initTown();
+		initComboBoxes();
 		initTravel();
 		addComponents();
 	}
@@ -69,15 +98,99 @@ public class ServerUI extends JPanel{
 		
 	}
 	
+	public void initComboBoxes(){
+		comboBoxFrom = new JComboBox();
+        comboBoxFrom.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+                comboBoxFrom.getSelectedItem();
+            }
+        });
+        comboBoxFrom.addPopupMenuListener(new PopupMenuListener() {
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+
+            }
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+                comboBoxFrom.removeAllItems();
+                Object[] res = server.getAllCities();
+                	for(int i = 0; i < res.length; i++){
+                		comboBoxFrom.addItem(res[i]);
+                }
+            }
+        });
+        txtTravelFrom = new JLabel("Från");
+        comboBoxFrom.setBounds(400, 25, 125, 25);
+        txtTravelFrom.setBounds(370, 25, 125, 25);
+        
+        
+        comboBoxTo = new JComboBox();
+        comboBoxTo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                comboBoxTo.getSelectedItem();
+            }
+        });
+        comboBoxTo.addPopupMenuListener(new PopupMenuListener() {
+            public void popupMenuCanceled(PopupMenuEvent e) {
+
+            }
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+
+            }
+            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
+            	comboBoxTo.removeAllItems();
+                Object[] res = server.getAllCities();
+                for(int i = 0; i < res.length; i++){
+                    comboBoxTo.addItem(res[i]);
+                }
+            }
+        });
+        txtTravelTo = new JLabel("Till");
+        comboBoxTo.setBounds(600, 25, 125, 25);
+        txtTravelTo.setBounds(580, 25, 125, 25);
+        
+	}
+	
 	public void initTravel(){
+		travelWeek = new JTextField();
+		txtTravelWeek = new JLabel("Vecka");
+		travelWeek.setBounds(400, 55, 125, 25);
+		txtTravelWeek.setBounds(360, 55, 125, 25);
+		
+		travelPrice = new JTextField();
+		txtTravelPrice =  new JLabel("Pris");
+		travelPrice.setBounds(600, 55, 125, 25);
+		txtTravelPrice.setBounds(575, 55, 125, 25);
+		
+		travelDeparture = new JTextField("HHMMSS");
+		txtTravelDeparture =  new JLabel("Avresa");
+		travelDeparture.setBounds(400, 85, 125, 25);
+		txtTravelDeparture.setBounds(355, 85, 125, 25);
+		
+		travelArrival = new JTextField("HHMMSS");
+		txtTravelArrival =  new JLabel("Hemresa");
+		travelArrival.setBounds(600, 85, 125, 25);
+		txtTravelArrival.setBounds(545, 85, 125, 25);
+		
+		
+		travelSeats = new JTextField();
+		txtTravelSeats =  new JLabel("Platser");
+		travelSeats.setBounds(400, 115, 125, 25);
+		txtTravelSeats.setBounds(355, 115, 125, 25);
+		
+		btnTravel = new JButton("Lägg till resor");
+		btnTravel.setBounds(400, 150, 200, 25);
+		btnTravel.addActionListener(al);
 		
 	}
 	
 	public void initConnect(){
 		btnConnect = new JButton("Connect");
 		btnConnect.addActionListener(al);
-		txtPassword = new JTextField("pw");
-		txtUserName = new JTextField("root");
+		txtPassword = new JTextField("test");
+		txtUserName = new JTextField("test");
 		
 		btnConnect.setBounds(500, 500, 200, 25);
 		txtPassword.setBounds(290, 500, 200, 25);
@@ -101,6 +214,36 @@ public class ServerUI extends JPanel{
 		add(txtPassword);
 		add(txtUserName);
 		
+		add(comboBoxFrom);
+		add(txtTravelFrom);
+		add(comboBoxTo);
+		add(txtTravelTo);
+		
+		add(travelWeek);
+		add(txtTravelWeek);
+		
+		add(travelPrice);
+		add(txtTravelPrice);
+		
+		add(travelDeparture);
+		add(txtTravelDeparture);
+		
+		add(travelArrival);
+		add(txtTravelArrival);
+		
+		add(travelSeats);
+		add(txtTravelSeats);
+		add(btnTravel);
+		
+		
+	}
+	
+	public long getTimeLong(String time){
+
+		String[] parts;
+		parts = time.split(":");
+		long ret = ((Long.parseLong(parts[0])-1) * 3600000) + (Long.parseLong(parts[1]) * 60000) + (Long.parseLong(parts[2]) * 1000);
+		return ret;
 	}
 	
 	private class AL implements ActionListener{
@@ -118,6 +261,11 @@ public class ServerUI extends JPanel{
 			} else if (e.getSource() == btnConnect && btnConnect.getText().equals("Disconnect")){
 				server.closeConnection();
 				btnConnect.setText("Connect");
+			} else if(e.getSource() == btnTravel){
+				
+				Time departure = new Time(getTimeLong(travelDeparture.getText()));
+				Time arrival = new Time(getTimeLong(travelArrival.getText()));
+				server.addTravel(Integer.parseInt(travelWeek.getText()), comboBoxFrom.getSelectedItem().toString(), comboBoxTo.getSelectedItem().toString(), departure, arrival, Integer.parseInt(travelPrice.getText()), Integer.parseInt(travelSeats.getText()));
 			}
 		}
 	}
