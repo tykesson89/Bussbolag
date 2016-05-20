@@ -1,11 +1,15 @@
 package server;
 
+import Objects.Travel;
+import Objects.TravelSuggestions;
+
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -17,7 +21,6 @@ public class Server extends Thread {
     private String user;
     private ServerSocket serversocket;
     private Thread thread = new Thread(this);
-
     private Connection conn;
 
     public Server(String host, String databas, String password, String user, int port) {
@@ -26,6 +29,7 @@ public class Server extends Thread {
             this.databas = databas;
             this.password = password;
             this.user = user;
+
             serversocket = new ServerSocket(port);
             thread.start();
 
@@ -61,6 +65,15 @@ public class Server extends Thread {
                 if(str.equals("All Cities")){
                 	Object[] res = getAllCities();
                     oos.writeObject(res);
+                }else if(str.equals("All Cities As List")) {
+                    List<String> list = getAllCitiesAsList();
+                    oos.writeObject(list);
+                }else if(str.equals("Search")){
+                    Travel travel;
+                    travel = (Travel)ois.readObject();
+                   List<TravelSuggestions> list = getATravelSuggestion(travel);
+                    oos.writeObject(list);
+
                 }
 
             }
@@ -99,6 +112,52 @@ public class Server extends Thread {
             e.printStackTrace();
         }
         return res.toArray();
+    }
+    public List<String> getAllCitiesAsList(){
+        ResultSet rs;
+        List<String> res = new ArrayList<>();
+        Statement statement;
+        try {
+            statement = conn.createStatement();
+            rs = statement.executeQuery("Select namn from Stad");
+            while (rs.next()){
+                res.add(rs.getString("namn"));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return res;
+    }
+    public List<TravelSuggestions> getATravelSuggestion(Travel travel){
+        String from = travel.getFrom();
+        String to = travel.getTo();
+        String dayOfWeek = travel.getDayOfWeek();
+        int week = travel.getWeek();
+        int seats = travel.getSeats();
+        TravelSuggestions travelSuggestions;
+        List<TravelSuggestions> travelSuggestionsList = new ArrayList<>();
+        Statement statement;
+        ResultSet rs;
+        try {
+            statement = conn.createStatement();
+            rs = statement.executeQuery("Select * from Resa WHERE vecka = " + week + " and veckodag = '" + dayOfWeek + "' and till = '" + to + "' and från = '" + from + "';");
+            while (rs.next()){
+            travelSuggestions = new TravelSuggestions();
+                travelSuggestions.setArrival(rs.getTime("ankomsttid"));
+                travelSuggestions.setDeparture(rs.getTime("avgångstid"));
+                travelSuggestions.setDayOfWeek(rs.getString("veckodag"));
+                travelSuggestions.setFrom(rs.getString("från"));
+                travelSuggestions.setTo(rs.getString("till"));
+                travelSuggestions.setPrice(rs.getInt("pris"));
+                travelSuggestions.setSeats(seats);
+                travelSuggestions.setWeek(week);
+                travelSuggestionsList.add(travelSuggestions);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return travelSuggestionsList;
     }
     
     
