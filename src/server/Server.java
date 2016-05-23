@@ -143,6 +143,7 @@ public class Server extends Thread {
             rs = statement.executeQuery("Select * from Resa WHERE vecka = " + week + " and veckodag = '" + dayOfWeek + "' and till = '" + to + "' and från = '" + from + "';");
             while (rs.next()){
             travelSuggestions = new TravelSuggestions();
+
                 travelSuggestions.setArrival(rs.getTime("ankomsttid"));
                 travelSuggestions.setDeparture(rs.getTime("avgångstid"));
                 travelSuggestions.setDayOfWeek(rs.getString("veckodag"));
@@ -151,10 +152,14 @@ public class Server extends Thread {
                 travelSuggestions.setPrice(rs.getInt("pris"));
                 travelSuggestions.setSeats(seats);
                 travelSuggestions.setWeek(week);
+                travelSuggestions.setTravelid(rs.getInt("resid"));
+                System.out.println(travelSuggestions.toString());
                 travelSuggestionsList.add(travelSuggestions);
             }
         }catch (SQLException e){
             e.printStackTrace();
+            e.fillInStackTrace();
+            e.getStackTrace();
         }
 
         return travelSuggestionsList;

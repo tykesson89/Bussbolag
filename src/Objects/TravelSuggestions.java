@@ -16,6 +16,15 @@ public class TravelSuggestions implements Serializable {
     private int price;
     private Time departure;
     private Time Arrival;
+    private int travelid;
+
+    public int getTravelid() {
+        return travelid;
+    }
+
+    public void setTravelid(int travelid) {
+        this.travelid = travelid;
+    }
 
     public TravelSuggestions(){
 
@@ -93,5 +102,20 @@ public class TravelSuggestions implements Serializable {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "TravelSuggestions{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", dayOfWeek='" + dayOfWeek + '\'' +
+                ", week=" + week +
+                ", seats=" + seats +
+                ", price=" + price +
+                ", departure=" + departure +
+                ", Arrival=" + Arrival +
+                ", travelid=" + travelid +
+                '}';
     }
 }
