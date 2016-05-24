@@ -1,5 +1,6 @@
 package server;
 
+import Objects.Customer;
 import Objects.Travel;
 import Objects.TravelSuggestions;
 
@@ -73,7 +74,11 @@ public class Server extends Thread {
                     travel = (Travel)ois.readObject();
                    List<TravelSuggestions> list = getATravelSuggestion(travel);
                     oos.writeObject(list);
-
+                }else if(str.equals("New Customer")){
+                    Customer customer;
+                    customer = (Customer)ois.readObject();
+                  String response =  newCustomer(customer);
+                    oos.writeObject(response);
                 }
 
             }
@@ -95,6 +100,53 @@ public class Server extends Thread {
         } catch (SQLException e) {
             System.out.println(e);
         }
+
+    }
+
+    public String newCustomer(Customer customer){
+        long personalNumber = customer.getPersonalNumber();
+        int travelId = customer.getTravelId();
+        int seats = customer.getSeats();
+        String phoneNumber = customer.getPhoneNumber();
+        String email = customer.getEmail();
+        String address = customer.getAddress();
+        String name = customer.getName();
+        try {
+            PreparedStatement stmt = conn.prepareStatement("insert into Kund(PersonNr, Namn, Email, Adress, Telefon) values (?, ?, ?, ?, ?)");
+            stmt.setLong(1, personalNumber);
+            stmt.setString(2, name);
+            stmt.setString(3, email);
+            stmt.setString(4, address);
+            stmt.setString(5, phoneNumber);
+            stmt.executeUpdate();
+
+            PreparedStatement stmt1 = conn.prepareStatement("insert into bokning(PersonNr, ResID, platser) values (?, ?, ?)");
+            stmt1.setLong(1, personalNumber);
+            stmt1.setInt(2, travelId);
+            stmt1.setInt(3, seats);
+            stmt1.executeUpdate();
+
+
+            ResultSet rs;
+
+            Statement statement;
+            statement = conn.createStatement();
+                rs = statement.executeQuery("Select platser from Resa where resID = " + travelId + ";");
+                rs.first();
+                int seatsLeft = rs.getInt("platser");
+                seatsLeft = seatsLeft - seats;
+
+            PreparedStatement stmt2 = conn.prepareStatement("update resa set platser = ? where resID = ?");
+            stmt2.setInt(1, seatsLeft);
+            stmt2.setInt(2, travelId);
+            stmt2.executeUpdate();
+
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return "Fail";
+        }
+        return "Success";
 
     }
     
@@ -144,7 +196,7 @@ public class Server extends Thread {
             while (rs.next()){
             travelSuggestions = new TravelSuggestions();
 
-                travelSuggestions.setArrival(rs.getTime("ankomsttid"));
+                travelSuggestions.setArrival(rs.getTime("ankomstid"));
                 travelSuggestions.setDeparture(rs.getTime("avgångstid"));
                 travelSuggestions.setDayOfWeek(rs.getString("veckodag"));
                 travelSuggestions.setFrom(rs.getString("från"));
@@ -188,7 +240,7 @@ public class Server extends Thread {
     				} else {
     					weekDay = "Söndag";
     				}
-    	            PreparedStatement stmt = conn.prepareStatement("insert into Resa(vecka, platser, pris, veckodag, avgångstid, ankomsttid, till, från) values (?, ?, ?, ?, ?, ?, ?, ?)");
+    	            PreparedStatement stmt = conn.prepareStatement("insert into Resa(vecka, platser, pris, veckodag, avgångstid, ankomstid, till, från) values (?, ?, ?, ?, ?, ?, ?, ?)");
     	            stmt.setInt(1, i);
     	            stmt.setInt(2, seats);
     	            stmt.setInt(3, price);
