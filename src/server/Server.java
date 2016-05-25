@@ -1,6 +1,7 @@
 package server;
 
 import Objects.Customer;
+import Objects.CustomerExists;
 import Objects.Travel;
 import Objects.TravelSuggestions;
 
@@ -73,11 +74,20 @@ public class Server extends Thread {
                     Travel travel;
                     travel = (Travel)ois.readObject();
                    List<TravelSuggestions> list = getATravelSuggestion(travel);
-                    oos.writeObject(list);
+                    if(list.size()==0){
+                        oos.writeObject("No Travels Found");
+                    }else {
+                        oos.writeObject(list);
+                    }
                 }else if(str.equals("New Customer")){
                     Customer customer;
                     customer = (Customer)ois.readObject();
                   String response =  newCustomer(customer);
+                    oos.writeObject(response);
+                }else if(str.equals("Existing Customer")){
+                    CustomerExists customerExists;
+                    customerExists = (CustomerExists)ois.readObject();
+                    String response = existingCustomer(customerExists);
                     oos.writeObject(response);
                 }
 
@@ -149,6 +159,51 @@ public class Server extends Thread {
         return "Success";
 
     }
+    public String existingCustomer(CustomerExists customer){
+        long personalNumber = customer.getPersonalNumber();
+        int travelId = customer.getTravelId();
+        int seats = customer.getSeats();
+
+        try {
+            ResultSet resultSet;
+            Statement stmt4;
+            stmt4 = conn.createStatement();
+            resultSet = stmt4.executeQuery("Select count(*) from Kund where personNR = " + personalNumber + ";");
+            resultSet.first();
+            int rowCount = resultSet.getInt(1);
+            if (rowCount == 0) {
+                return "Customer doesent exists";
+            } else {
+
+                PreparedStatement stmt1 = conn.prepareStatement("insert into bokning(PersonNr, ResID, platser) values (?, ?, ?)");
+                stmt1.setLong(1, personalNumber);
+                stmt1.setInt(2, travelId);
+                stmt1.setInt(3, seats);
+                stmt1.executeUpdate();
+
+
+                ResultSet rs;
+                Statement statement;
+                statement = conn.createStatement();
+                rs = statement.executeQuery("Select platser from Resa where resID = " + travelId + ";");
+                rs.first();
+                int seatsLeft = rs.getInt("platser");
+                seatsLeft = seatsLeft - seats;
+
+                PreparedStatement stmt2 = conn.prepareStatement("update resa set platser = ? where resID = ?");
+                stmt2.setInt(1, seatsLeft);
+                stmt2.setInt(2, travelId);
+                stmt2.executeUpdate();
+                return "Success";
+            }
+
+            }catch(SQLException e){
+                e.printStackTrace();
+                return "Fail";
+            }
+
+
+    }
     
     public Object[] getAllCities(){
         ResultSet rs;
@@ -195,7 +250,7 @@ public class Server extends Thread {
             rs = statement.executeQuery("Select * from Resa WHERE vecka = " + week + " and veckodag = '" + dayOfWeek + "' and till = '" + to + "' and från = '" + from + "';");
             while (rs.next()){
             travelSuggestions = new TravelSuggestions();
-
+                travelSuggestions.setSeatsLeft(rs.getInt("platser"));
                 travelSuggestions.setArrival(rs.getTime("ankomstid"));
                 travelSuggestions.setDeparture(rs.getTime("avgångstid"));
                 travelSuggestions.setDayOfWeek(rs.getString("veckodag"));
